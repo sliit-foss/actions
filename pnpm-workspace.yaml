@@ -1,2 +1,2 @@
 packages:
-  - "internal/*"
+  - "preview-deployments/*"

@@ -1,0 +1,32 @@
+name: preview-postbuild
+description: Uploads the project build files as a github artifact to be used by the deploy action
+inputs:
+  build_dir:
+    description: "The directory to publish"
+    default: "dist"
+runs:
+  using: composite
+  steps:
+    - name: Save PR number to file 📝
+      run: |
+          mkdir -p ./pr
+          echo ${{ github.event.number }} > ./pr/NB
+      shell: bash
+
+    - name: Upload PR number 📤
+      uses: actions/upload-artifact@v2
+      with:
+        name: pr
+        path: pr/
+
+    - name: Save build directory 📝
+      run: |
+        mkdir -p ./pr_site
+        mv dist ./pr_site/.
+      shell: bash
+
+    - name: Upload build directory 📤
+      uses: actions/upload-artifact@v2
+      with:
+        name: pr_site
+        path: pr_site/
