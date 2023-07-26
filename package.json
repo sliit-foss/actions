@@ -2,7 +2,7 @@
   "name": "actions",
   "scripts": {
     "lint": "turbo run lint",
-    "format": "prettier --write --cache \"**/*.{ts,tsx,md}\"",
+    "format": "prettier --write --cache \"**/*.{ts,tsx,md,yml,yaml}\"",
     "prepare": "lefthook install"
   },
   "devDependencies": {

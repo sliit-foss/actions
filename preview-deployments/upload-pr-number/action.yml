@@ -1,0 +1,16 @@
+name: upload-pr-number
+description: Uploads the PR number as an artifact to be used by the clean action
+runs:
+  using: composite
+  steps:
+    - name: Save PR number 📝
+      run: |
+        mkdir -p ./prnumber
+        echo ${{ github.event.number }} > ./prnumber/prnumber.txt
+      shell: bash
+
+    - name: Upload PR number 📤
+      uses: actions/upload-artifact@v2
+      with:
+        name: prnumber
+        path: prnumber/
