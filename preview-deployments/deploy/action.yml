@@ -63,6 +63,7 @@ runs:
           });
           var fs = require('fs');
           fs.writeFileSync('${{github.workspace}}/pr_site.zip', Buffer.from(download.data));
+      shell: bash
 
     - name: Unzip built site artifact 📦
       run: unzip pr_site.zip
