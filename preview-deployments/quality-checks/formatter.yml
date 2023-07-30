@@ -1,0 +1,39 @@
+name: quality checks
+description: Runs quality checks on the projecting
+runs:
+  using: composite
+  steps:
+    - name: Install pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 8.0.0
+    
+    - name: Install Node.js 18 and setup dependency caching
+      uses: actions/setup-node@v2
+      with:
+        node-version: 18.x
+        cache: 'pnpm'
+    
+    - name: Install dependencies
+      run: pnpm install --ignore-scripts
+      shell: bash
+
+    - name: Run formatter
+      run: pnpm run format
+      shell: bash
+
+    - name: Check file changers
+      description: Checks if the files changed in the PR, if not, it will exit with a non-zero exit code. If the files changed, it will commit the changes and push them to the PR branch.
+      run: |
+        git diff --name-only > changed_files.txt
+        if [ -s changed_files.txt ]; then
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          cat changed_files.txt | xargs git add
+          git commit -m "Format changed files"
+          git push
+        else
+          echo "No files changed"
+          exit 1
+        fi
+      shell: bash

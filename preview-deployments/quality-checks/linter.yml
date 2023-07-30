@@ -1,0 +1,23 @@
+name: quality checks
+description: Runs quality checks on the projecting
+runs:
+  using: composite
+  steps:
+    - name: Install pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 8.0.0
+    
+    - name: Install Node.js 18 and setup dependency caching
+      uses: actions/setup-node@v2
+      with:
+        node-version: 18.x
+        cache: 'pnpm'
+    
+    - name: Install dependencies
+      run: pnpm install --ignore-scripts
+      shell: bash
+
+    - name: Run linter
+      run: pnpm run lint
+      shell: bash
