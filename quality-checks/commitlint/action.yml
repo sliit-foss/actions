@@ -30,5 +30,5 @@ runs:
       uses: actions/checkout@v2
 
     - name: Run commitlint
-      run: pnpm commitlint --edit --color
+      run: pnpm exec commitlint --edit --color
       shell: bash
