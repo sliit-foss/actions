@@ -39,6 +39,9 @@ runs:
       run: ${{ inputs.package-manager }} run format ${{ inputs.formatter-options }}
       shell: bash
 
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
     - name: Check and commit file changes
       uses: EndBug/add-and-commit@v9
       with:
