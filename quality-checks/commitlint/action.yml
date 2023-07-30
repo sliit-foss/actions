@@ -27,5 +27,5 @@ runs:
       shell: bash
 
     - name: Run commitlint
-      run: pnpm run commitlint --edit --color
+      run: pnpm commitlint --edit --color
       shell: bash
