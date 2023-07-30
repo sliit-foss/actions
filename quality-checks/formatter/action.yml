@@ -22,6 +22,9 @@ runs:
       run: pnpm run format
       shell: bash
 
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
     - name: Check file changers
       uses: EndBug/add-and-commit@v9
       with:
