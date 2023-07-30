@@ -3,17 +3,6 @@ description: Checks commit messages for compliance with the conventional commit 
 runs:
   using: composite
   steps:
-    - name: Install pnpm
-      uses: pnpm/action-setup@v2
-      with:
-        version: 8.0.0
-    
-    - name: Install Node.js 18 and setup dependency caching
-      uses: actions/setup-node@v2
-      with:
-        node-version: 18.x
-        cache: 'pnpm'
-
     - name: Check commitlint.config.cjs
       # description: Checks if the commitlint.config.cjs file is not present in the PR, add it.
       run: |
@@ -22,13 +11,8 @@ runs:
         fi
       shell: bash
 
-    - name: Setup commitlint
-      run: pnpm install --save-dev @commitlint/cli @commitlint/config-conventional
-      shell: bash
-
     - name: Checkout repository
       uses: actions/checkout@v2
 
     - name: Run commitlint
-      run: npx commitlint --from=HEAD~1
-      shell: bash
+      uses: wagoid/commitlint-github-action@v5
