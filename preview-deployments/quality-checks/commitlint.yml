@@ -1,5 +1,5 @@
-name: quality checks
-description: Runs quality checks on the projecting
+name: commitlint
+description: Checks commit messages for compliance with the conventional commit standard
 runs:
   using: composite
   steps:

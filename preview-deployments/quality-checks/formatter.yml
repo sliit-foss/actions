@@ -1,5 +1,5 @@
-name: quality checks
-description: Runs quality checks on the projecting
+name: formatter
+description: Checks the code for formatting errors
 runs:
   using: composite
   steps:
