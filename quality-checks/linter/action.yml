@@ -25,7 +25,7 @@ runs:
       with:
         version: ${{ inputs.pnpm-version }}
     
-    - name: Install Node.js ${{ inputs.node-version }} and setup dependency caching
+    - name: Install Node.js and setup dependency caching
       uses: actions/setup-node@v3
       with:
         node-version: ${{ inputs.node-version }}.x
