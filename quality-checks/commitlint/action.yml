@@ -26,6 +26,9 @@ runs:
       run: pnpm install --save-dev @commitlint/cli @commitlint/config-conventional
       shell: bash
 
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
     - name: Run commitlint
       run: pnpm commitlint --edit --color
       shell: bash
