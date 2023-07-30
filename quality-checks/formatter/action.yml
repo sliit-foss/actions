@@ -23,7 +23,7 @@ runs:
       shell: bash
 
     - name: Check file changers
-      description: Checks if the files changed in the PR, if not, it will exit with a non-zero exit code. If the files changed, it will commit the changes and push them to the PR branch.
+      # description: Checks if the files changed in the PR, if not, it will exit with a non-zero exit code. If the files changed, it will commit the changes and push them to the PR branch.
       run: |
         git diff --name-only > changed_files.txt
         if [ -s changed_files.txt ]; then
