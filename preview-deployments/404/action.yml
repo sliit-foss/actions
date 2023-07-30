@@ -1,0 +1,26 @@
+name: Fix 404
+description: Fixes 404 error on page reload
+runs:
+  using: composite
+  steps:
+    - run: |
+        sed -i "s/.\/assets/\/assets/" dist/index.html
+        cp dist/index.html dist/404.html
+
+        cat <<EOF > script.js
+            <script type="text/javascript">
+                (function(l) {
+                    const matchPreviewDeployment = l.pathname.match(/preview\/pr-\d+/);
+                    if (matchPreviewDeployment) l.replace(l.origin + "/" +matchPreviewDeployment[0]);
+                }(window.location))
+            </script>
+          </head>
+        EOF
+          
+        sed -i '/<\/head>/ {
+            r script.js
+            d
+        }' dist/404.html
+          
+        rm script.js
+      shell: bash
