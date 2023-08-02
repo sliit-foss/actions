@@ -1,0 +1,9 @@
+name: base-path/next
+description: Fixes the router base path to match preview deployments in NextJS projects
+runs:
+  using: composite
+  steps:
+    - run: |
+        sed -i "s/basePath: ''/basePath: '\/preview\/pr-${{ github.event.number }}'/" next.config.js
+      shell: bash
+

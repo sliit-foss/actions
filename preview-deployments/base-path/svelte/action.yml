@@ -1,0 +1,9 @@
+name: base-path/svelte
+description: Fixes the router base path to match preview deployments in Svelte projects
+runs:
+  using: composite
+  steps:
+    - run: |
+        sed -i "s/paths: {}/paths: {base: '\/preview\/pr-${{ github.event.number }}'}/" svelte.config.js
+      shell: bash
+
