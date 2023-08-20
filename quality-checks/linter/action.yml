@@ -9,7 +9,7 @@ inputs:
     default: "pnpm"
   pnpm-version:
     description: 'The version of pnpm to use (only applies if package-manager is pnpm)'
-    default: "8.0.0"
+    default: "8"
   install-options:
     description: 'The options to pass to the package manager install command'
     default: "--ignore-scripts"
