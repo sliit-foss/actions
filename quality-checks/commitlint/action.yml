@@ -3,7 +3,7 @@ description: Checks commit messages for compliance with the conventional commit 
 runs:
   using: composite
   steps:
-    - name: Check commitlint.config.cjs
+    - name: Check for commitlint config file
       # description: Checks if the commitlint.config.cjs file is not present in the PR, add it.
       run: |
         if [ ! -f commitlint.config.* ]; then
