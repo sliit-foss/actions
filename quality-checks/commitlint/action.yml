@@ -6,7 +6,7 @@ runs:
     - name: Check commitlint.config.cjs
       # description: Checks if the commitlint.config.cjs file is not present in the PR, add it.
       run: |
-        if [ ! -f commitlint.config.cjs ]; then
+        if [ ! -f commitlint.config.* ]; then
           curl -o commitlint.config.cjs https://raw.githubusercontent.com/sliit-foss/actions/main/commitlint.config.cjs
         fi
       shell: bash
