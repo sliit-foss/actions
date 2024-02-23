@@ -26,10 +26,18 @@ runs:
         version: ${{ inputs.pnpm-version }}
     
     - name: Install Node.js and setup dependency caching
+      if: ${{ inputs.package-manager != 'bun' }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ inputs.node-version }}.x
         cache: '${{ inputs.package-manager }}'
+
+    - name: Install Bun 1.0
+      if: ${{ inputs.package-manager == 'bun' }}
+      uses: akalanka47000/setup-bun@v1.2
+      with:
+        bun-version: 1.0.20
+        no-cache: true
     
     - name: Install dependencies
       run: ${{ inputs.package-manager }} install ${{ inputs.install-options }}

@@ -1,0 +1,20 @@
+name: build
+description: Base build action for projects
+inputs:
+  storybooks:
+    description: "Whether to build storybook or not"
+    default: "false"
+runs:
+  using: composite
+  steps:
+    - name: Setup
+      uses: sliit-foss/actions/bun/setup@main
+
+    - name: Build changes
+      run: |
+        if [ ${{ inputs.storybooks }} = "true" ]; then
+          bun build-storybook
+        else
+          bun run build
+        fi
+      shell: bash

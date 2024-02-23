@@ -1,0 +1,43 @@
+name: release
+description: Base package release action
+inputs:
+  latest:
+    description: 'Whether to make the release latest or not'
+    default: "false"
+runs:
+  using: composite
+  steps:
+    - name: Configure git
+      run: |
+        git config pull.ff true
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
+      shell: bash
+
+    - name: Install Node.js 18 (Remove this step once bun supports an alternative for the npm scripts required below)
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+
+    - name: Bump version
+      run: bun bump-version
+      shell: bash
+
+    - name: Publish package
+      run: bun release 
+      shell: bash
+
+    - name: Sync release
+      id: sync
+      run: |
+        git pull --rebase && git push origin
+        echo "tag=$(v$(node -e "console.log(require('./package.json').version)"))" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - name: Create release on GitHub
+      uses: ncipollo/release-action@v1
+      with:
+        generateReleaseNotes: true
+        skipIfReleaseExists: true
+        makeLatest: ${{ inputs.latest }}
+        tag: ${{steps.sync.outputs.tag}}

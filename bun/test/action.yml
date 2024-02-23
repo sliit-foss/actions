@@ -1,0 +1,11 @@
+name: test
+description: Base test action for projects
+runs:
+  using: composite
+  steps:
+    - name: Setup
+      uses: sliit-foss/actions/bun/setup@main
+
+    - name: Run tests
+      run: bun test
+      shell: bash
