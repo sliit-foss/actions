@@ -30,8 +30,10 @@ runs:
     - name: Sync release
       id: sync
       run: |
+        tag=v$(node -e "console.log(require('./package.json').version)")
+        git tag $tag
         git pull --rebase && git push origin
-        echo "tag=$(v$(node -e "console.log(require('./package.json').version)"))" >> $GITHUB_OUTPUT
+        echo "tag=$tag" >> $GITHUB_OUTPUT
       shell: bash
 
     - name: Create release on GitHub
