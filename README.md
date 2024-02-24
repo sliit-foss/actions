@@ -27,7 +27,7 @@ A collection of reusable Github Actions for both internal and external use
 
 ```yaml
 - name: Upload build files 📤
-  uses: sliit-foss/actions/preview-deployments/postbuild@main
+  uses: sliit-foss/actions/preview-deployments/postbuild@v1
 ```
 
 ## Commit messages
