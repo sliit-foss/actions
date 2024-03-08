@@ -4,6 +4,9 @@ inputs:
   latest:
     description: 'Whether to make the release latest or not'
     default: "false"
+  scrub_dependencies:
+    description: 'If true, the dependencies field will be scrubbed from the package.json file before publishing the package. This is useful for packages whose dependencies are bundled along with the package'
+    default: "false"
 runs:
   using: composite
   steps:
@@ -24,7 +27,11 @@ runs:
       shell: bash
 
     - name: Publish package
-      run: bun release 
+      run: |
+        if [ "${{ inputs.scrub_dependencies }}" = "true" ]; then
+          jq 'del(.dependencies)' package.json > package.json.tmp && mv package.json.tmp package.json
+        fi
+        bun release 
       shell: bash
 
     - name: Sync release
