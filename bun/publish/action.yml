@@ -39,7 +39,7 @@ runs:
       run: |
         tag=v$(node -e "console.log(require('./package.json').version)")
         git tag $tag || true
-        git pull --rebase && git push origin
+        git pull --rebase --autostash && git push origin
         echo "tag=$tag" >> $GITHUB_OUTPUT
       shell: bash
 
