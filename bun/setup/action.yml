@@ -3,10 +3,10 @@ description: Base dependency setup action for projects
 runs:
   using: composite
   steps:
-    - name: Install Bun 1.0
+    - name: Install Bun 1.1
       uses: akalanka47000/setup-bun@v1.2
       with:
-        bun-version: 1.0.20
+        bun-version: 1.1.12
         no-cache: true
 
     - name: Install dependencies
