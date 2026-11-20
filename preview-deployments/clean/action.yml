@@ -4,10 +4,10 @@ runs:
   using: composite
   steps:
     - name: Download PR number artifact 📦
-      uses: actions/github-script@v3.1.0
+      uses: actions/github-script@v9
       with:
         script: |
-          var artifacts = await github.actions.listWorkflowRunArtifacts({
+          var artifacts = await github.rest.actions.listWorkflowRunArtifacts({
              owner: context.repo.owner,
              repo: context.repo.repo,
              run_id: ${{github.event.workflow_run.id }},
@@ -15,7 +15,7 @@ runs:
           var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
             return artifact.name == "prnumber"
           })[0];
-          var download = await github.actions.downloadArtifact({
+          var download = await github.rest.actions.downloadArtifact({
              owner: context.repo.owner,
              repo: context.repo.repo,
              artifact_id: matchArtifact.id,
@@ -31,7 +31,7 @@ runs:
       shell: bash
 
     - name: Set up Python 3 🐍
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v7
       with:
         python-version: 3.x
 
