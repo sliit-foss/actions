@@ -39,6 +39,7 @@ runs:
     - name: Unzip PR number artifact 📦
       run: |
         unzip pr.zip
+        [[ "$(cat NB)" =~ ^[0-9]+$ ]] || { echo "Invalid PR number"; exit 1; }
         echo "pr-number=$(cat NB)" >> "$GITHUB_ENV"
       shell: bash
 
