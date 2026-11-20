@@ -3,12 +3,12 @@ description: Checks the code for formatting errors. Formats the code and commits
 inputs:
   node-version:
     description: 'The version of Node.js to use'
-    default: "18"
+    default: "24"
   package-manager:
     description: 'The package manager to use'
     default: "pnpm"
   pnpm-version:
-    description: 'The version of pnpm to use (only applies if package-manager is pnpm)'
+    description: 'The version of pnpm to use when package.json does not pin one (only applies if package-manager is pnpm)'
     default: "8"
   install-options:
     description: 'The options to pass to the package manager install command'
@@ -19,14 +19,26 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Resolve pnpm version
+      id: pnpm
+      if: ${{ inputs.package-manager == 'pnpm' }}
+      # A version pinned in package.json wins; passing a second one makes pnpm/action-setup fail
+      run: |
+        if grep -q '"packageManager": *"pnpm@' package.json 2>/dev/null; then
+          echo "version=" >> "$GITHUB_OUTPUT"
+        else
+          echo "version=${{ inputs.pnpm-version }}" >> "$GITHUB_OUTPUT"
+        fi
+      shell: bash
+
     - name: Install pnpm
       if: ${{ inputs.package-manager == 'pnpm' }}
-      uses: pnpm/action-setup@v2
+      uses: pnpm/action-setup@v6
       with:
-        version: ${{ inputs.pnpm-version }}
+        version: ${{ steps.pnpm.outputs.version }}
     
     - name: Install Node.js and setup dependency caching
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v7
       with:
         node-version: ${{ inputs.node-version }}.x
         cache: '${{ inputs.package-manager }}'
@@ -40,10 +52,10 @@ runs:
       shell: bash
 
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v7
 
     - name: Check and commit file changes
-      uses: EndBug/add-and-commit@v9
+      uses: EndBug/add-and-commit@v11
       with:
         default_author: github_actions
         message: 'Chore: format code'

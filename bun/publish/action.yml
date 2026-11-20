@@ -18,9 +18,9 @@ runs:
       shell: bash
 
     - name: Install Node.js 18 (Remove this step once bun supports an alternative for the npm scripts required below)
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v7
       with:
-        node-version: 18
+        node-version: 24
 
     - name: Bump version
       run: bun bump-version

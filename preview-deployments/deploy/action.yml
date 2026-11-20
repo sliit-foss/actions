@@ -11,12 +11,12 @@ runs:
   using: composite
   steps:
     - name: Set up Python 3 🐍
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v7
       with:
         python-version: 3.x
 
     - name: Download PR number artifact 📦
-      uses: actions/github-script@v7
+      uses: actions/github-script@v9
       with:
         script: |
           var artifacts = await github.rest.actions.listWorkflowRunArtifacts({
@@ -44,7 +44,7 @@ runs:
       shell: bash
 
     - name: Download built site artifact 📦
-      uses: actions/github-script@v7
+      uses: actions/github-script@v9
       with:
         script: |
           var artifacts = await github.rest.actions.listWorkflowRunArtifacts({
